@@ -29,7 +29,7 @@
         <q-tr
           :props="props">
           <q-td auto-width>
-            <q-btn size="sm" flat dense icon="clear" @click="deleteBlackIP()"/>
+            <q-btn size="sm" flat dense icon="clear" @click="deleteBlackIP(props.row._id)"/>
           </q-td>
           <q-td
             v-for="col in props.cols"
@@ -48,7 +48,7 @@
 </style>
 
 <script>
-import { ref, defineComponent } from 'vue';
+import { ref, defineComponent, } from 'vue';
 import { api } from '../lib/api';
 import { onMounted } from '@vue/runtime-core';
 
@@ -62,7 +62,7 @@ export default defineComponent({
 
     onMounted(async () => {
       api.get('/black').then(res => {
-        if (res.status === 200) {
+        if ((/2../).test(res.status.toString())) {
           rows.value = res.data;
         }
       }).catch(e => {
@@ -73,7 +73,7 @@ export default defineComponent({
     const addBlackIP = async () => {
       if (!newIP.value.length) return;
       await api.post('/black', { ip: newIP.value }).then(res => {
-        if (res.status === 200) {
+        if ((/2../).test(res.status.toString())) {
           rows.value.push(res.data);
         }
       }).catch(e => {
@@ -84,7 +84,7 @@ export default defineComponent({
 
     const deleteBlackIP = async (id) => {
       await api.delete(`/black/${id}`).then(res => {
-        if (res.status === 200) {
+        if ((/2../).test(res.status.toString())) {
           const idx = rows.value.findIndex(row => row._id === id);
           rows.value.splice(idx, 1);
         }
