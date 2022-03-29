@@ -82,7 +82,7 @@ export default defineComponent({
       { name: '관리자명', label: '관리자명', align: 'center', sortable: true, field: 'owner' },
       { name: '방정보', label: '방정보', align: 'center', sortable: true, field: 'Roomname' },
       { name: '새 URL', label: '새 URL', align: 'center', sortable: true, field: 'newURL' },
-      { name: '모바일', label: '모바일', align: 'center', sortable: true, field: 'mainURL' },
+      { name: '모바일', label: '모바일', align: 'center', sortable: true, field: 'mobileURL' },
       { name: 'PC', label: 'PC', align: 'center', sortable: true, field: 'PCURL' },
       { name: 'LD', label: 'LD', align: 'center', sortable: true, field: 'LPURL' },
     ];
