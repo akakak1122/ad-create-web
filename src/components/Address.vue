@@ -92,7 +92,7 @@ export default defineComponent({
     const filter = ref('');
 
     onMounted(async () => {
-      api.get('/address').then(res => {
+      api().get('/address').then(res => {
         if ((/2../).test(res.status.toString())) {
           rows.value = res.data;
         }
@@ -102,7 +102,7 @@ export default defineComponent({
     });
 
     const deleteAddress = async (id) => {
-      await api.delete(`/address/${id}`).then(res => {
+      await api().delete(`/address/${id}`).then(res => {
         if ((/2../).test(res.status.toString())) {
           const idx = rows.value.findIndex(row => row._id === id);
           rows.value.splice(idx, 1);
@@ -120,7 +120,7 @@ export default defineComponent({
       const data = editMode.value;
       const id = data._id;
       delete data._id;
-      await api.patch(`/address/${id}`, data).then(res => {
+      await api().patch(`/address/${id}`, data).then(res => {
         if ((/2../).test(res.status.toString())) {
           const idx = rows.value.findIndex(row => row._id === id);
           rows.value[idx] = res.data;
@@ -136,7 +136,7 @@ export default defineComponent({
     };
 
     const createAddress = async () => {
-      await api.post('/address', addMode.value).then(res => {
+      await api().post('/address', addMode.value).then(res => {
         if ((/2../).test(res.status.toString())) {
           rows.value.push(res.data);
         }

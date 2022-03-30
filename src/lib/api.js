@@ -1,8 +1,11 @@
 import axios from 'axios';
 
-export const api = axios.create({
-  baseURL: 'localhost:3000/api',
-  headers: {
-    "Content-type": "application/json"
-  },
-});
+export const api = () => {
+  return axios.create({
+    baseURL: 'http://13.124.218.201/api',
+    headers: {
+      "Content-type": "application/json",
+      "access_token": localStorage.getItem('token'),
+    },
+  });
+}

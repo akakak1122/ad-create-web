@@ -61,7 +61,7 @@ export default defineComponent({
     const newIP = ref('');
 
     onMounted(async () => {
-      api.get('/black').then(res => {
+      api().get('/black').then(res => {
         if ((/2../).test(res.status.toString())) {
           rows.value = res.data;
         }
@@ -72,7 +72,7 @@ export default defineComponent({
 
     const addBlackIP = async () => {
       if (!newIP.value.length) return;
-      await api.post('/black', { ip: newIP.value }).then(res => {
+      await api().post('/black', { ip: newIP.value }).then(res => {
         if ((/2../).test(res.status.toString())) {
           rows.value.push(res.data);
         }
@@ -83,7 +83,7 @@ export default defineComponent({
     };
 
     const deleteBlackIP = async (id) => {
-      await api.delete(`/black/${id}`).then(res => {
+      await api().delete(`/black/${id}`).then(res => {
         if ((/2../).test(res.status.toString())) {
           const idx = rows.value.findIndex(row => row._id === id);
           rows.value.splice(idx, 1);

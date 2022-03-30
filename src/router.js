@@ -7,13 +7,30 @@ const routes = [
     component: () => import('./components/Main'),
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('./components/Login'),
+  },
+  {
     path: '/:url',
     name: 'PageChange',
     component: () => import('./components/PageChange'),
   },
 ];
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to, _from, next) => {
+  const token = localStorage.getItem('token');
+
+  if (to.path === '/' && !token) {
+    return next('/login');
+  }
+
+  next();
+});
+
+export default router;
