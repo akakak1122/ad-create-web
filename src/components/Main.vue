@@ -1,6 +1,7 @@
 <template>
   <Address />
   <Black />
+  <History />
   <div class="q-pa-md">
     <q-card>
       <q-card-section>
@@ -23,11 +24,13 @@
 <script>
 import Address from './Address.vue';
 import Black from './Black.vue';
+import History from './History.vue';
 
 export default {
   components: {
     Address,
     Black,
+    History,
   }
 }
 </script>
