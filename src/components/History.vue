@@ -20,12 +20,15 @@
 import { ref, defineComponent, } from 'vue';
 import { api } from '../lib/api';
 import { onMounted } from '@vue/runtime-core';
+import moment from 'moment-timezone';
 
 export default defineComponent({
   setup() {
+    moment.tz.setDefault("Asia/Seoul");
+
     const columns = [
       { name: 'IP', label: 'IP', align: 'center', sortable: true, field: 'ip' },
-      { name: '들어온 시간', label: '들어온 시간', align: 'center', sortable: true, field: 'createdAt', format: val => val },
+      { name: '들어온 시간', label: '들어온 시간', align: 'center', sortable: true, field: 'createdAt', format: val => moment(val).format('YYYY-MM-DD HH시mm분ss초') },
     ];
     const rows = ref([]);
     const newIP = ref('');
