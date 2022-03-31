@@ -18,7 +18,7 @@
 
 <script>
 import { ref, defineComponent, } from 'vue';
-import { api } from '../lib/api';햣
+import { api } from '../lib/api';
 import { onMounted } from '@vue/runtime-core';
 import moment from 'moment-timezone';
 
