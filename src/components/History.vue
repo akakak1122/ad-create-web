@@ -18,7 +18,7 @@
 
 <script>
 import { ref, defineComponent, } from 'vue';
-import { api } from '../lib/api';
+import { api } from '../lib/api';햣
 import { onMounted } from '@vue/runtime-core';
 import moment from 'moment-timezone';
 
@@ -37,7 +37,6 @@ export default defineComponent({
       api().get('/history').then(res => {
         if ((/2../).test(res.status.toString())) {
           rows.value = res.data;
-          console.log(rows.value)
         }
       }).catch(e => {
         console.log(e);
