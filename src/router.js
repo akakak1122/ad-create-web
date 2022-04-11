@@ -12,6 +12,11 @@ const routes = [
     component: () => import('./components/Login'),
   },
   {
+    path: '/404',
+    name: 'NotFound',
+    component: () => import('./components/NotFound'),
+  },
+  {
     path: '/:url',
     name: 'PageChange',
     component: () => import('./components/PageChange'),
