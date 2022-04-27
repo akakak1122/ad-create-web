@@ -3,9 +3,15 @@
     <q-table
       :rows="rows"
       :columns="columns"
+      :filter="filter"
       row-key="_id"
     >
       <template v-slot:top>
+        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
         <q-space />
         <q-input v-model="newIP" label="IP">
           <template v-slot:after>
@@ -32,11 +38,16 @@
             <q-btn size="sm" flat dense icon="clear" @click="deleteBlackIP(props.row._id)"/>
           </q-td>
           <q-td
-            v-for="col in props.cols"
+            v-for="(col) in props.cols"
             :key="col.name"
             :props="props"
           >
-            {{ col.value }}
+            <div v-if="col.field=='ignored'">
+              <q-toggle v-model="props.row.ignored" @click="updateBlackIP(props.row._id, props.row.ignored)"/>
+            </div>
+            <div v-else>
+              {{ col.value }}
+            </div>
           </q-td>
         </q-tr>
       </template>
@@ -56,9 +67,11 @@ export default defineComponent({
   setup() {
     const columns = [
       { name: '차단 IP', label: '차단 IP', align: 'center', sortable: true, field: 'ip' },
+      { name: '비활성화', label: '비활성화', align: 'center', field: 'ignored' },
     ];
     const rows = ref([]);
     const newIP = ref('');
+    const filter = ref('');
 
     onMounted(async () => {
       api().get('/black').then(res => {
@@ -93,13 +106,26 @@ export default defineComponent({
       });
     };
 
+    const updateBlackIP = async (id, isIgnored) => {
+      await api().put(`/black/${id}`, { ignored: isIgnored }).then(res => {
+        if ((/2../).test(res.status.toString())) {
+          const idx = rows.value.findIndex(row => row._id === id);
+          rows.value[idx] = res.data;
+        }
+      }).catch(e => {
+        console.log(e);
+      });
+    };
+
     return {
       columns,
       rows,
       newIP,
+      filter,
 
       addBlackIP,
       deleteBlackIP,
+      updateBlackIP,
     };
   },
 });

@@ -29,6 +29,11 @@ export default defineComponent({
     const columns = [
       { name: 'IP', label: 'IP', align: 'center', sortable: true, field: 'ip' },
       { name: '들어온 시간', label: '들어온 시간', align: 'center', sortable: true, field: 'createdAt', format: val => moment(val).format('YYYY-MM-DD HH시mm분ss초') },
+      { name: '국가', label: '국가', align: 'center', sortable: true, field: 'country' },
+      { name: '도시', label: '도시', align: 'center', sortable: true, field: 'city' },
+      { name: 'OS', label: 'OS', align: 'center', sortable: true, field: 'os' },
+      { name: 'Browser', label: 'Browser', align: 'center', sortable: true, field: 'browser' },
+      { name: 'Source', label: 'Source', align: 'center', sortable: true, field: 'source' },
     ];
     const rows = ref([]);
     const newIP = ref('');
