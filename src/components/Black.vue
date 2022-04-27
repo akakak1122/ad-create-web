@@ -67,6 +67,7 @@ export default defineComponent({
   setup() {
     const columns = [
       { name: '차단 IP', label: '차단 IP', align: 'center', sortable: true, field: 'ip' },
+      { name: '차단 UUID', label: '차단 UUID', align: 'center', sortable: true, field: 'uuid' },
       { name: '비활성화', label: '비활성화', align: 'center', field: 'ignored' },
     ];
     const rows = ref([]);

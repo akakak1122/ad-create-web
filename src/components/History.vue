@@ -3,9 +3,15 @@
     <q-table
       :rows="rows"
       :columns="columns"
+      :filter="filter"
       row-key="_id"
     >
       <template v-slot:top>
+        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
         <q-space />
         <q-btn label="초기화" @click="deleteAllHistory"/>
       </template>
@@ -28,6 +34,7 @@ export default defineComponent({
 
     const columns = [
       { name: 'IP', label: 'IP', align: 'center', sortable: true, field: 'ip' },
+      { name: 'UUID', label: 'UUID', align: 'center', sortable: true, field: 'uuid' },
       { name: '들어온 시간', label: '들어온 시간', align: 'center', sortable: true, field: 'createdAt', format: val => moment(val).format('YYYY-MM-DD HH시mm분ss초') },
       { name: '국가', label: '국가', align: 'center', sortable: true, field: 'country' },
       { name: '도시', label: '도시', align: 'center', sortable: true, field: 'city' },
@@ -37,6 +44,7 @@ export default defineComponent({
     ];
     const rows = ref([]);
     const newIP = ref('');
+    const filter = ref('');
 
     onMounted(async () => {
       api().get('/history').then(res => {
@@ -62,6 +70,7 @@ export default defineComponent({
       columns,
       rows,
       newIP,
+      filter,
 
       deleteAllHistory,
     };

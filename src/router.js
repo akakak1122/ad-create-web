@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from 'vue-router';
+import { v1 } from 'uuid';
 
 const routes = [
   {
@@ -30,6 +31,9 @@ const router = createRouter({
 
 router.beforeEach((to, _from, next) => {
   const token = localStorage.getItem('token');
+  const uuid = localStorage.getItem('uuid');
+  if (!uuid) localStorage.setItem('uuid', v1());
+  console.log('uuid', uuid)
 
   if (to.path === '/' && !token) {
     return next('/login');

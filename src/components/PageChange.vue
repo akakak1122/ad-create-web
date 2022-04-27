@@ -10,7 +10,7 @@ export default {
 
     onMounted(async () => {
       const url = route.params.url;
-      const res = await api().get(`/address/${url}`);
+      const res = await api().get(`/address/${url}`, { params: { uuid: localStorage.getItem('uuid') }});
       if ((/2../).test(res.status.toString()) && res.data.length) {
         window.location.href = res.data;
       }
