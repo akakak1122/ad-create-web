@@ -13,9 +13,10 @@
           </template>
         </q-input>
         <q-space />
-        <q-input v-model="newIP" label="IP">
+        <q-select v-model="key" :options="['IP','UUID']"/>
+        <q-input v-model="newdata" label="IP or UUID">
           <template v-slot:after>
-            <q-btn label="추가" @click="addBlackIP" />
+            <q-btn label="추가" @click="addBlack" />
           </template>
         </q-input>
       </template>
@@ -71,7 +72,8 @@ export default defineComponent({
       { name: '비활성화', label: '비활성화', align: 'center', field: 'ignored' },
     ];
     const rows = ref([]);
-    const newIP = ref('');
+    const newdata = ref('');
+    const key = ref('IP');
     const filter = ref('');
 
     onMounted(async () => {
@@ -84,16 +86,16 @@ export default defineComponent({
       });
     });
 
-    const addBlackIP = async () => {
-      if (!newIP.value.length) return;
-      await api().post('/black', { ip: newIP.value }).then(res => {
+    const addBlack = async () => {
+      if (!newdata.value.length) return;
+      await api().post('/black', { [key.value.toLowerCase()]: newdata.value }).then(res => {
         if ((/2../).test(res.status.toString())) {
-          rows.value.push(res.data);
+          rows.value.unshift(res.data);
         }
       }).catch(e => {
         console.log(e);
       });
-      newIP.value = '';
+      newdata.value = '';
     };
 
     const deleteBlackIP = async (id) => {
@@ -121,10 +123,11 @@ export default defineComponent({
     return {
       columns,
       rows,
-      newIP,
+      newdata,
       filter,
+      key,
 
-      addBlackIP,
+      addBlack,
       deleteBlackIP,
       updateBlackIP,
     };

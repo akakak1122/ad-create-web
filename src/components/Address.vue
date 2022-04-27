@@ -138,7 +138,7 @@ export default defineComponent({
     const createAddress = async () => {
       await api().post('/address', addMode.value).then(res => {
         if ((/2../).test(res.status.toString())) {
-          rows.value.push(res.data);
+          rows.value.unshift(res.data);
         }
       }).catch(e => {
         console.log(e);
