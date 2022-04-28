@@ -38,6 +38,7 @@ export default defineComponent({
       { name: 'IP', label: 'IP', align: 'center', sortable: true, field: 'ip' },
       { name: 'UUID', label: 'UUID', align: 'center', sortable: true, field: 'uuid' },
       { name: '들어온 시간', label: '들어온 시간', align: 'center', sortable: true, field: 'createdAt', format: val => moment(val).format('YYYY-MM-DD HH시mm분ss초') },
+      { name: '횟수', label: '횟수', align: 'center', sortable: true, field: 'cnt', },
       { name: '국가', label: '국가', align: 'center', sortable: true, field: 'country' },
       { name: '도시', label: '도시', align: 'center', sortable: true, field: 'city' },
       { name: 'OS', label: 'OS', align: 'center', sortable: true, field: 'os' },
