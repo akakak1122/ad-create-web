@@ -13,6 +13,7 @@
           </template>
         </q-input>
         <q-space />
+        <q-btn label="엑셀다운" @click="exportExcel" icon-right="archive"/>
         <q-btn label="초기화" @click="deleteAllHistory"/>
       </template>
     </q-table>
@@ -27,6 +28,7 @@ import { ref, defineComponent, } from 'vue';
 import { api } from '../lib/api';
 import { onMounted } from '@vue/runtime-core';
 import moment from 'moment-timezone';
+import * as XLSX from 'xlsx';
 
 export default defineComponent({
   setup() {
@@ -66,6 +68,21 @@ export default defineComponent({
       });
     };
 
+    const customData = (data => {
+      return columns.reduce((a, c) => {
+        if (c.field === 'createdAt') a[c.name] = moment(data[c.field]).format('YYYY-MM-DD HH시mm분ss초');
+        else a[c.name] = data[c.field];
+        return a;
+      }, {});
+    });
+    const exportExcel = async () => {
+      const wb = XLSX.utils.book_new();    // 엑셀 파일 생성 (workbook)
+      const ws = XLSX.utils.json_to_sheet(rows.value.map(v=> customData(v)))    // 시트 생성 (worksheet) 및 데이터 삽입
+      XLSX.utils.book_append_sheet(wb, ws, 'sheet1');  // 엑셀 파일에 시트 추가
+
+      XLSX.writeFile(wb, 'log.xlsx'); // 엑셀 다운로드
+    };
+
     return {
       columns,
       rows,
@@ -73,6 +90,7 @@ export default defineComponent({
       filter,
 
       deleteAllHistory,
+      exportExcel,
     };
   },
 });
